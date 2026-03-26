@@ -474,6 +474,237 @@ main {
     background: var(--primary-light);
 }
 
+/* Photo Scan Section */
+.section-desc {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.api-key-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.api-key-row input {
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.api-key-row input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-small:hover {
+    background: var(--primary-dark);
+}
+
+.helper-text {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+}
+
+.api-key-status {
+    font-size: 0.85rem;
+    color: var(--green);
+    font-weight: 500;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin-left: 0.5rem;
+}
+
+#api-key-saved {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.photo-upload-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+}
+
+.photo-upload-area:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.camera-icon {
+    font-size: 2.5rem;
+}
+
+.photo-preview {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+/* Analysis Results */
+#analysis-results {
+    margin-top: 1rem;
+    border-top: 2px solid var(--primary-light);
+    padding-top: 1rem;
+}
+
+#analysis-results h3 {
+    font-size: 0.95rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.75rem;
+}
+
+.detected-food-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f5f0eb;
+}
+
+.detected-food-item:last-child {
+    border-bottom: none;
+}
+
+.detected-food-info {
+    flex: 1;
+}
+
+.detected-food-name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.detected-food-detail {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.detected-food-cals {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--primary-dark);
+    margin-left: 0.75rem;
+}
+
+.detected-food-qty {
+    width: 60px;
+    padding: 0.3rem 0.4rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-left: 0.5rem;
+}
+
+.detected-food-qty:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn-remove-detected {
+    background: none;
+    border: none;
+    color: var(--red);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 0.3rem;
+    margin-left: 0.3rem;
+}
+
+.analysis-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    margin-top: 0.5rem;
+    border-top: 2px solid var(--primary-light);
+    font-size: 1rem;
+}
+
+.analysis-total strong {
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+}
+
+.analysis-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.analysis-actions .btn {
+    flex: 1;
+}
+
+/* Loading Spinner */
+#analysis-loading {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+#analysis-loading p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--primary-light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 /* Footer */
 footer {
     text-align: center;
@@ -603,9 +834,73 @@ footer {
             </div>
         </section>
 
+        <!-- Photo Scan Section -->
+        <section id="photo-section" class="card">
+            <h2>Scan Your Food</h2>
+            <p class="section-desc">Take a photo or upload an image of your meal to auto-detect calories</p>
+
+            <!-- API Key Setup -->
+            <div id="api-key-setup">
+                <div class="form-group">
+                    <label for="api-key">Anthropic API Key</label>
+                    <div class="api-key-row">
+                        <input type="password" id="api-key" placeholder="sk-ant-...">
+                        <button id="save-api-key-btn" class="btn btn-small">Save</button>
+                    </div>
+                    <span class="helper-text">Needed for AI food recognition. Stored locally in your browser only.</span>
+                </div>
+            </div>
+            <div id="api-key-saved" class="hidden">
+                <span class="api-key-status">API key saved</span>
+                <button id="change-api-key-btn" class="btn-link">Change</button>
+            </div>
+
+            <!-- Photo Upload Area -->
+            <div id="photo-upload-area" class="photo-upload-area">
+                <input type="file" id="photo-input" accept="image/*" capture="environment" hidden>
+                <div id="photo-placeholder" class="photo-placeholder">
+                    <span class="camera-icon">&#128247;</span>
+                    <span>Tap to take photo or upload image</span>
+                </div>
+                <img id="photo-preview" class="photo-preview hidden" alt="Food photo">
+            </div>
+
+            <div class="form-group">
+                <label for="photo-meal-type">Meal</label>
+                <select id="photo-meal-type">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snacks">Snacks</option>
+                </select>
+            </div>
+
+            <button id="analyze-btn" class="btn btn-primary" disabled>Analyze Food Photo</button>
+
+            <!-- Analysis Results -->
+            <div id="analysis-results" class="hidden">
+                <h3>Detected Foods</h3>
+                <div id="detected-foods-list"></div>
+                <div class="analysis-total">
+                    <span>Estimated Total:</span>
+                    <strong id="analysis-total-cals">0 kcal</strong>
+                </div>
+                <div class="analysis-actions">
+                    <button id="add-all-detected-btn" class="btn btn-primary">Add All to Meal</button>
+                    <button id="clear-analysis-btn" class="btn btn-secondary">Clear</button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="analysis-loading" class="hidden">
+                <div class="loading-spinner"></div>
+                <p>Analyzing your food photo...</p>
+            </div>
+        </section>
+
         <!-- Meal Logging Section -->
         <section id="log-section" class="card">
-            <h2>Log a Meal</h2>
+            <h2>Log a Meal (Manual)</h2>
             <div class="form-group">
                 <label for="meal-type">Meal</label>
                 <select id="meal-type">
@@ -663,6 +958,8 @@ footer {
         <p>NutriDidi &mdash; Designed for Indian women's nutritional needs</p>
     </footer>
 
+    <script src="food-database.js"></script>
+    <script src="app.js"></script>
     <script>
 // Indian Food Database
 // Nutritional values per standard serving
@@ -897,6 +1194,286 @@ const FOOD_CATEGORIES = [...new Set(FOOD_DATABASE.map(f => f.category))];
         goalDisplay.classList.remove("hidden");
         updateDashboard();
     });
+
+    // ===== PHOTO SCAN FEATURE =====
+    const apiKeyInput = document.getElementById("api-key");
+    const saveApiKeyBtn = document.getElementById("save-api-key-btn");
+    const apiKeySetup = document.getElementById("api-key-setup");
+    const apiKeySaved = document.getElementById("api-key-saved");
+    const changeApiKeyBtn = document.getElementById("change-api-key-btn");
+    const photoInput = document.getElementById("photo-input");
+    const photoUploadArea = document.getElementById("photo-upload-area");
+    const photoPlaceholder = document.getElementById("photo-placeholder");
+    const photoPreview = document.getElementById("photo-preview");
+    const analyzeBtn = document.getElementById("analyze-btn");
+    const analysisResults = document.getElementById("analysis-results");
+    const analysisLoading = document.getElementById("analysis-loading");
+    const detectedFoodsList = document.getElementById("detected-foods-list");
+    const analysisTotalCals = document.getElementById("analysis-total-cals");
+
+    let currentPhotoBase64 = null;
+    let detectedFoods = [];
+
+    // API key management
+    const savedKey = localStorage.getItem("nutrididi_api_key");
+    if (savedKey) {
+        apiKeySetup.classList.add("hidden");
+        apiKeySaved.classList.remove("hidden");
+    }
+
+    saveApiKeyBtn.addEventListener("click", function () {
+        const key = apiKeyInput.value.trim();
+        if (!key) return;
+        localStorage.setItem("nutrididi_api_key", key);
+        apiKeySetup.classList.add("hidden");
+        apiKeySaved.classList.remove("hidden");
+        updateAnalyzeBtn();
+    });
+
+    changeApiKeyBtn.addEventListener("click", function () {
+        apiKeySaved.classList.add("hidden");
+        apiKeySetup.classList.remove("hidden");
+        apiKeyInput.value = "";
+        apiKeyInput.focus();
+    });
+
+    // Photo upload
+    photoUploadArea.addEventListener("click", function () {
+        photoInput.click();
+    });
+
+    photoInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            photoPreview.src = e.target.result;
+            photoPreview.classList.remove("hidden");
+            photoPlaceholder.classList.add("hidden");
+
+            // Extract base64 data (remove data:image/...;base64, prefix)
+            currentPhotoBase64 = e.target.result.split(",")[1];
+            updateAnalyzeBtn();
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function updateAnalyzeBtn() {
+        const hasKey = !!localStorage.getItem("nutrididi_api_key");
+        analyzeBtn.disabled = !(hasKey && currentPhotoBase64);
+    }
+
+    // Build the food list string for the AI prompt
+    function getFoodListForPrompt() {
+        return FOOD_DATABASE.map(f =>
+            `${f.id}|${f.name}|${f.serving}|${f.calories}|${f.protein}|${f.carbs}|${f.fat}`
+        ).join("\n");
+    }
+
+    // Analyze photo with Claude Vision
+    analyzeBtn.addEventListener("click", async function () {
+        const apiKey = localStorage.getItem("nutrididi_api_key");
+        if (!apiKey || !currentPhotoBase64) return;
+
+        // Show loading
+        analysisLoading.classList.remove("hidden");
+        analysisResults.classList.add("hidden");
+        analyzeBtn.disabled = true;
+
+        // Determine image media type
+        const src = photoPreview.src;
+        let mediaType = "image/jpeg";
+        if (src.startsWith("data:image/png")) mediaType = "image/png";
+        else if (src.startsWith("data:image/webp")) mediaType = "image/webp";
+        else if (src.startsWith("data:image/gif")) mediaType = "image/gif";
+
+        const foodList = getFoodListForPrompt();
+
+        try {
+            const response = await fetch("https://api.anthropic.com/v1/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": apiKey,
+                    "anthropic-version": "2023-06-01",
+                    "anthropic-dangerous-direct-browser-access": "true",
+                },
+                body: JSON.stringify({
+                    model: "claude-sonnet-4-20250514",
+                    max_tokens: 1024,
+                    messages: [{
+                        role: "user",
+                        content: [
+                            {
+                                type: "image",
+                                source: {
+                                    type: "base64",
+                                    media_type: mediaType,
+                                    data: currentPhotoBase64,
+                                },
+                            },
+                            {
+                                type: "text",
+                                text: `You are an Indian food nutrition expert. Look at this photo of food and identify all the Indian food items visible.
+
+For each food item, match it to the closest item from this database (format: id|name|serving|calories|protein|carbs|fat):
+${foodList}
+
+Estimate the number of servings visible for each item.
+
+Respond ONLY in this exact JSON format, no other text:
+{"foods": [{"db_id": <number>, "name": "<name from database>", "servings": <number>}, ...]}
+
+If a food is not in the database, use db_id: 0 and provide your best estimate:
+{"db_id": 0, "name": "<food name>", "servings": 1, "calories": <number>, "protein": <number>, "carbs": <number>, "fat": <number>}
+
+If no food is visible, respond: {"foods": []}`,
+                            },
+                        ],
+                    }],
+                }),
+            });
+
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error?.message || `API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const text = data.content[0].text.trim();
+
+            // Parse JSON from response (handle markdown code blocks)
+            let jsonStr = text;
+            const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+            if (codeBlockMatch) jsonStr = codeBlockMatch[1].trim();
+
+            const result = JSON.parse(jsonStr);
+            detectedFoods = (result.foods || []).map(f => {
+                if (f.db_id && f.db_id > 0) {
+                    const dbFood = FOOD_DATABASE.find(x => x.id === f.db_id);
+                    if (dbFood) {
+                        return {
+                            dbId: dbFood.id,
+                            name: dbFood.name,
+                            serving: dbFood.serving,
+                            servings: f.servings || 1,
+                            calories: dbFood.calories,
+                            protein: dbFood.protein,
+                            carbs: dbFood.carbs,
+                            fat: dbFood.fat,
+                        };
+                    }
+                }
+                // Custom / not in DB
+                return {
+                    dbId: 0,
+                    name: f.name,
+                    serving: "1 serving",
+                    servings: f.servings || 1,
+                    calories: f.calories || 100,
+                    protein: f.protein || 3,
+                    carbs: f.carbs || 15,
+                    fat: f.fat || 4,
+                };
+            });
+
+            renderDetectedFoods();
+            analysisResults.classList.remove("hidden");
+        } catch (err) {
+            alert("Error analyzing photo: " + err.message);
+        } finally {
+            analysisLoading.classList.add("hidden");
+            updateAnalyzeBtn();
+        }
+    });
+
+    function renderDetectedFoods() {
+        if (detectedFoods.length === 0) {
+            detectedFoodsList.innerHTML = '<p class="empty-state">No food items detected in the photo.</p>';
+            analysisTotalCals.textContent = "0 kcal";
+            return;
+        }
+
+        detectedFoodsList.innerHTML = detectedFoods.map((f, i) => `
+            <div class="detected-food-item" data-index="${i}">
+                <div class="detected-food-info">
+                    <span class="detected-food-name">${f.name}</span>
+                    <span class="detected-food-detail">${f.serving} &middot; ${f.calories} kcal/serving</span>
+                </div>
+                <input type="number" class="detected-food-qty" value="${f.servings}" min="0.25" max="10" step="0.25" data-index="${i}">
+                <span class="detected-food-cals">${Math.round(f.calories * f.servings)} kcal</span>
+                <button class="btn-remove-detected" data-index="${i}">&times;</button>
+            </div>
+        `).join("");
+
+        updateAnalysisTotal();
+    }
+
+    function updateAnalysisTotal() {
+        const total = detectedFoods.reduce((sum, f) => sum + Math.round(f.calories * f.servings), 0);
+        analysisTotalCals.textContent = total + " kcal";
+    }
+
+    // Handle qty changes and removal in detected foods
+    detectedFoodsList.addEventListener("input", function (e) {
+        if (e.target.classList.contains("detected-food-qty")) {
+            const idx = parseInt(e.target.dataset.index);
+            detectedFoods[idx].servings = parseFloat(e.target.value) || 1;
+            const item = e.target.closest(".detected-food-item");
+            const calSpan = item.querySelector(".detected-food-cals");
+            calSpan.textContent = Math.round(detectedFoods[idx].calories * detectedFoods[idx].servings) + " kcal";
+            updateAnalysisTotal();
+        }
+    });
+
+    detectedFoodsList.addEventListener("click", function (e) {
+        const btn = e.target.closest(".btn-remove-detected");
+        if (!btn) return;
+        const idx = parseInt(btn.dataset.index);
+        detectedFoods.splice(idx, 1);
+        renderDetectedFoods();
+    });
+
+    // Add all detected foods to meal
+    document.getElementById("add-all-detected-btn").addEventListener("click", function () {
+        const mealType = document.getElementById("photo-meal-type").value;
+
+        for (const f of detectedFoods) {
+            const entry = {
+                id: Date.now() + Math.random(),
+                foodId: f.dbId,
+                name: f.name,
+                serving: f.serving,
+                qty: f.servings,
+                calories: Math.round(f.calories * f.servings),
+                protein: Math.round(f.protein * f.servings * 10) / 10,
+                carbs: Math.round(f.carbs * f.servings * 10) / 10,
+                fat: Math.round(f.fat * f.servings * 10) / 10,
+            };
+            state.meals[mealType].push(entry);
+        }
+
+        saveToStorage("nutrididi_meals", state.meals);
+        updateDashboard();
+        renderLoggedMeals();
+        clearPhotoAnalysis();
+    });
+
+    // Clear analysis
+    document.getElementById("clear-analysis-btn").addEventListener("click", clearPhotoAnalysis);
+
+    function clearPhotoAnalysis() {
+        detectedFoods = [];
+        currentPhotoBase64 = null;
+        photoPreview.classList.add("hidden");
+        photoPlaceholder.classList.remove("hidden");
+        photoPreview.src = "";
+        photoInput.value = "";
+        analysisResults.classList.add("hidden");
+        detectedFoodsList.innerHTML = "";
+        updateAnalyzeBtn();
+    }
 
     // ===== FOOD SEARCH =====
     const foodSearchInput = document.getElementById("food-search");
