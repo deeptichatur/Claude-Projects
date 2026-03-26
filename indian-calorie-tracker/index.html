@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriDidi - Indian Calorie Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>NutriDidi</h1>
+        <p class="tagline">Your daily nutrition companion</p>
+    </header>
+
+    <main>
+        <!-- Profile Setup Section -->
+        <section id="profile-section" class="card">
+            <h2>Your Profile</h2>
+            <form id="profile-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age (years)</label>
+                        <input type="number" id="age" min="15" max="80" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" min="30" max="150" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" min="120" max="200" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="activity">Activity Level</label>
+                    <select id="activity" required>
+                        <option value="">Select activity level</option>
+                        <option value="1.2">Sedentary (desk job, little exercise)</option>
+                        <option value="1.375">Lightly Active (light exercise 1-3 days/week)</option>
+                        <option value="1.55">Moderately Active (exercise 3-5 days/week)</option>
+                        <option value="1.725">Very Active (hard exercise 6-7 days/week)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Calculate Daily Goal</button>
+            </form>
+            <div id="calorie-goal-display" class="hidden">
+                <p>Your daily calorie goal: <strong id="calorie-goal-value">0</strong> kcal</p>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="card">
+            <h2>Today's Progress</h2>
+            <div class="progress-container">
+                <div class="progress-ring-wrapper">
+                    <svg class="progress-ring" width="180" height="180">
+                        <circle class="progress-ring-bg" cx="90" cy="90" r="78" />
+                        <circle class="progress-ring-fill" cx="90" cy="90" r="78" />
+                    </svg>
+                    <div class="progress-text">
+                        <span id="calories-consumed">0</span>
+                        <span class="progress-label">of <span id="calories-target">0</span> kcal</span>
+                    </div>
+                </div>
+                <div class="macro-summary">
+                    <div class="macro-item">
+                        <span class="macro-value" id="total-protein">0g</span>
+                        <span class="macro-label">Protein</span>
+                    </div>
+                    <div class="macro-item">
+                        <span class="macro-value" id="total-carbs">0g</span>
+                        <span class="macro-label">Carbs</span>
+                    </div>
+                    <div class="macro-item">
+                        <span class="macro-value" id="total-fat">0g</span>
+                        <span class="macro-label">Fat</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meal Breakdown -->
+            <div class="meal-breakdown">
+                <div class="meal-summary" data-meal="breakfast">
+                    <span class="meal-icon">&#127749;</span>
+                    <span class="meal-name">Breakfast</span>
+                    <span class="meal-cals" id="breakfast-cals">0 kcal</span>
+                </div>
+                <div class="meal-summary" data-meal="lunch">
+                    <span class="meal-icon">&#127837;</span>
+                    <span class="meal-name">Lunch</span>
+                    <span class="meal-cals" id="lunch-cals">0 kcal</span>
+                </div>
+                <div class="meal-summary" data-meal="dinner">
+                    <span class="meal-icon">&#127869;</span>
+                    <span class="meal-name">Dinner</span>
+                    <span class="meal-cals" id="dinner-cals">0 kcal</span>
+                </div>
+                <div class="meal-summary" data-meal="snacks">
+                    <span class="meal-icon">&#127848;</span>
+                    <span class="meal-name">Snacks</span>
+                    <span class="meal-cals" id="snacks-cals">0 kcal</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Meal Logging Section -->
+        <section id="log-section" class="card">
+            <h2>Log a Meal</h2>
+            <div class="form-group">
+                <label for="meal-type">Meal</label>
+                <select id="meal-type">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snacks">Snacks</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="food-search">Search Food</label>
+                <input type="text" id="food-search" placeholder="Type to search (e.g. dal, roti, rice...)">
+                <div id="search-results" class="search-results hidden"></div>
+            </div>
+            <div class="form-group">
+                <label for="serving-qty">Servings</label>
+                <input type="number" id="serving-qty" min="0.25" max="10" step="0.25" value="1">
+                <span id="serving-unit" class="serving-unit-label"></span>
+            </div>
+            <button id="add-food-btn" class="btn btn-primary" disabled>Add to Meal</button>
+        </section>
+
+        <!-- Logged Meals Section -->
+        <section id="logged-meals-section" class="card">
+            <h2>Today's Meals</h2>
+            <div id="logged-meals-list">
+                <p class="empty-state">No meals logged yet. Start by adding food above!</p>
+            </div>
+            <button id="clear-meals-btn" class="btn btn-secondary hidden">Clear All Meals</button>
+        </section>
+
+        <!-- Food Database Browser -->
+        <section id="food-db-section" class="card">
+            <h2>Indian Food Database</h2>
+            <div class="category-tabs" id="category-tabs"></div>
+            <div id="food-table-container">
+                <table class="food-table">
+                    <thead>
+                        <tr>
+                            <th>Food</th>
+                            <th>Serving</th>
+                            <th>Calories</th>
+                            <th>Protein</th>
+                            <th>Carbs</th>
+                            <th>Fat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="food-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>NutriDidi &mdash; Designed for Indian women's nutritional needs</p>
+    </footer>
+
+    <script src="food-database.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+// Indian Food Database
+// Nutritional values per standard serving
+// Sources: Indian Food Composition Tables (IFCT), NIN Hyderabad
+
+const FOOD_DATABASE = [
+    // === CEREALS & GRAINS ===
+    { id: 1, name: "Roti (Whole Wheat)", category: "Cereals & Grains", serving: "1 medium (40g)", calories: 120, protein: 3.5, carbs: 22, fat: 2, fiber: 2.5 },
+    { id: 2, name: "Plain Rice (Cooked)", category: "Cereals & Grains", serving: "1 cup (150g)", calories: 180, protein: 3.5, carbs: 40, fat: 0.5, fiber: 0.5 },
+    { id: 3, name: "Jeera Rice", category: "Cereals & Grains", serving: "1 cup (180g)", calories: 220, protein: 4, carbs: 42, fat: 4, fiber: 1 },
+    { id: 4, name: "Paratha (Plain)", category: "Cereals & Grains", serving: "1 medium (60g)", calories: 200, protein: 4, carbs: 28, fat: 8, fiber: 2 },
+    { id: 5, name: "Aloo Paratha", category: "Cereals & Grains", serving: "1 medium (80g)", calories: 260, protein: 5, carbs: 35, fat: 11, fiber: 2.5 },
+    { id: 6, name: "Puri", category: "Cereals & Grains", serving: "1 medium (30g)", calories: 150, protein: 2.5, carbs: 18, fat: 8, fiber: 1 },
+    { id: 7, name: "Naan", category: "Cereals & Grains", serving: "1 piece (60g)", calories: 190, protein: 5, carbs: 32, fat: 4.5, fiber: 1.5 },
+    { id: 8, name: "Dosa (Plain)", category: "Cereals & Grains", serving: "1 medium (80g)", calories: 130, protein: 3.5, carbs: 22, fat: 3.5, fiber: 1 },
+    { id: 9, name: "Masala Dosa", category: "Cereals & Grains", serving: "1 medium (120g)", calories: 250, protein: 5, carbs: 35, fat: 10, fiber: 2 },
+    { id: 10, name: "Idli", category: "Cereals & Grains", serving: "2 pieces (80g)", calories: 130, protein: 4, carbs: 26, fat: 0.5, fiber: 1 },
+    { id: 11, name: "Upma", category: "Cereals & Grains", serving: "1 cup (200g)", calories: 210, protein: 5, carbs: 32, fat: 7, fiber: 2 },
+    { id: 12, name: "Poha", category: "Cereals & Grains", serving: "1 cup (180g)", calories: 200, protein: 4, carbs: 35, fat: 5, fiber: 1.5 },
+    { id: 13, name: "Uttapam", category: "Cereals & Grains", serving: "1 medium (100g)", calories: 180, protein: 5, carbs: 28, fat: 5, fiber: 1.5 },
+    { id: 14, name: "Bhatura", category: "Cereals & Grains", serving: "1 piece (70g)", calories: 280, protein: 5, carbs: 34, fat: 13, fiber: 1 },
+    { id: 15, name: "Chapati (Bajra)", category: "Cereals & Grains", serving: "1 medium (40g)", calories: 110, protein: 3, carbs: 20, fat: 2, fiber: 3 },
+    { id: 16, name: "Jowar Roti", category: "Cereals & Grains", serving: "1 medium (40g)", calories: 105, protein: 3, carbs: 21, fat: 1.5, fiber: 2.5 },
+    { id: 17, name: "Biryani (Veg)", category: "Cereals & Grains", serving: "1 cup (200g)", calories: 280, protein: 6, carbs: 45, fat: 9, fiber: 2 },
+    { id: 18, name: "Biryani (Chicken)", category: "Cereals & Grains", serving: "1 cup (200g)", calories: 320, protein: 15, carbs: 42, fat: 10, fiber: 1 },
+    { id: 19, name: "Pulao", category: "Cereals & Grains", serving: "1 cup (180g)", calories: 240, protein: 5, carbs: 40, fat: 7, fiber: 1.5 },
+    { id: 20, name: "Khichdi", category: "Cereals & Grains", serving: "1 cup (200g)", calories: 200, protein: 7, carbs: 34, fat: 4, fiber: 2 },
+
+    // === DALS & LENTILS ===
+    { id: 21, name: "Dal Tadka (Toor)", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 180, protein: 10, carbs: 28, fat: 4, fiber: 5 },
+    { id: 22, name: "Dal Fry", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 200, protein: 11, carbs: 26, fat: 6, fiber: 5 },
+    { id: 23, name: "Moong Dal", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 160, protein: 11, carbs: 24, fat: 3, fiber: 4 },
+    { id: 24, name: "Masoor Dal", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 170, protein: 12, carbs: 26, fat: 2.5, fiber: 5 },
+    { id: 25, name: "Chana Dal", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 210, protein: 12, carbs: 30, fat: 5, fiber: 6 },
+    { id: 26, name: "Rajma (Kidney Beans)", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 220, protein: 12, carbs: 32, fat: 5, fiber: 7 },
+    { id: 27, name: "Chole (Chickpeas)", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 240, protein: 11, carbs: 34, fat: 7, fiber: 6 },
+    { id: 28, name: "Sambar", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 140, protein: 7, carbs: 20, fat: 4, fiber: 4 },
+    { id: 29, name: "Rasam", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 60, protein: 2, carbs: 10, fat: 1.5, fiber: 1 },
+    { id: 30, name: "Dal Makhani", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 280, protein: 12, carbs: 30, fat: 12, fiber: 6 },
+    { id: 31, name: "Kadhi (Besan)", category: "Dals & Lentils", serving: "1 cup (200ml)", calories: 160, protein: 5, carbs: 14, fat: 9, fiber: 1 },
+    { id: 32, name: "Sprouts Salad", category: "Dals & Lentils", serving: "1 cup (100g)", calories: 100, protein: 7, carbs: 15, fat: 1, fiber: 4 },
+
+    // === SABZI (VEGETABLES) ===
+    { id: 33, name: "Aloo Gobi", category: "Sabzi", serving: "1 cup (150g)", calories: 180, protein: 4, carbs: 22, fat: 9, fiber: 3 },
+    { id: 34, name: "Bhindi Masala", category: "Sabzi", serving: "1 cup (150g)", calories: 140, protein: 3, carbs: 14, fat: 8, fiber: 4 },
+    { id: 35, name: "Baingan Bharta", category: "Sabzi", serving: "1 cup (150g)", calories: 130, protein: 3, carbs: 12, fat: 8, fiber: 4 },
+    { id: 36, name: "Palak Paneer", category: "Sabzi", serving: "1 cup (200g)", calories: 260, protein: 14, carbs: 10, fat: 18, fiber: 3 },
+    { id: 37, name: "Matar Paneer", category: "Sabzi", serving: "1 cup (200g)", calories: 280, protein: 14, carbs: 16, fat: 18, fiber: 4 },
+    { id: 38, name: "Mixed Veg Curry", category: "Sabzi", serving: "1 cup (150g)", calories: 150, protein: 4, carbs: 18, fat: 7, fiber: 4 },
+    { id: 39, name: "Aloo Matar", category: "Sabzi", serving: "1 cup (150g)", calories: 170, protein: 5, carbs: 24, fat: 6, fiber: 4 },
+    { id: 40, name: "Lauki (Bottle Gourd)", category: "Sabzi", serving: "1 cup (150g)", calories: 80, protein: 2, carbs: 10, fat: 4, fiber: 2 },
+    { id: 41, name: "Tinda Masala", category: "Sabzi", serving: "1 cup (150g)", calories: 90, protein: 2, carbs: 10, fat: 5, fiber: 2 },
+    { id: 42, name: "Karela (Bitter Gourd)", category: "Sabzi", serving: "1 cup (150g)", calories: 100, protein: 3, carbs: 10, fat: 5, fiber: 3 },
+    { id: 43, name: "Paneer Butter Masala", category: "Sabzi", serving: "1 cup (200g)", calories: 360, protein: 15, carbs: 14, fat: 28, fiber: 2 },
+    { id: 44, name: "Shahi Paneer", category: "Sabzi", serving: "1 cup (200g)", calories: 340, protein: 14, carbs: 12, fat: 26, fiber: 2 },
+    { id: 45, name: "Gobi Manchurian (Dry)", category: "Sabzi", serving: "1 cup (150g)", calories: 220, protein: 5, carbs: 24, fat: 12, fiber: 3 },
+    { id: 46, name: "Cabbage Sabzi", category: "Sabzi", serving: "1 cup (150g)", calories: 90, protein: 2, carbs: 10, fat: 5, fiber: 3 },
+    { id: 47, name: "Methi Aloo", category: "Sabzi", serving: "1 cup (150g)", calories: 160, protein: 4, carbs: 20, fat: 7, fiber: 3 },
+    { id: 48, name: "Tori (Ridge Gourd)", category: "Sabzi", serving: "1 cup (150g)", calories: 85, protein: 2, carbs: 8, fat: 5, fiber: 2 },
+
+    // === NON-VEG ===
+    { id: 49, name: "Butter Chicken", category: "Non-Veg", serving: "1 cup (200g)", calories: 340, protein: 22, carbs: 10, fat: 24, fiber: 1 },
+    { id: 50, name: "Chicken Curry", category: "Non-Veg", serving: "1 cup (200g)", calories: 280, protein: 24, carbs: 8, fat: 17, fiber: 1 },
+    { id: 51, name: "Tandoori Chicken (2 pcs)", category: "Non-Veg", serving: "2 pieces (150g)", calories: 260, protein: 30, carbs: 4, fat: 14, fiber: 0 },
+    { id: 52, name: "Egg Curry", category: "Non-Veg", serving: "2 eggs + gravy", calories: 280, protein: 16, carbs: 10, fat: 20, fiber: 1 },
+    { id: 53, name: "Boiled Egg", category: "Non-Veg", serving: "1 large", calories: 75, protein: 6, carbs: 0.5, fat: 5, fiber: 0 },
+    { id: 54, name: "Egg Bhurji", category: "Non-Veg", serving: "2 eggs (150g)", calories: 220, protein: 14, carbs: 4, fat: 16, fiber: 0.5 },
+    { id: 55, name: "Fish Curry", category: "Non-Veg", serving: "1 cup (200g)", calories: 240, protein: 22, carbs: 8, fat: 14, fiber: 1 },
+    { id: 56, name: "Keema (Mutton)", category: "Non-Veg", serving: "1 cup (150g)", calories: 310, protein: 22, carbs: 6, fat: 22, fiber: 1 },
+    { id: 57, name: "Chicken Tikka", category: "Non-Veg", serving: "6 pieces (120g)", calories: 200, protein: 26, carbs: 4, fat: 9, fiber: 0 },
+    { id: 58, name: "Omelette (2 eggs)", category: "Non-Veg", serving: "1 omelette", calories: 190, protein: 13, carbs: 2, fat: 14, fiber: 0 },
+
+    // === DAIRY ===
+    { id: 59, name: "Milk (Full Cream)", category: "Dairy", serving: "1 glass (200ml)", calories: 130, protein: 6, carbs: 10, fat: 7, fiber: 0 },
+    { id: 60, name: "Milk (Toned)", category: "Dairy", serving: "1 glass (200ml)", calories: 100, protein: 6, carbs: 10, fat: 3, fiber: 0 },
+    { id: 61, name: "Curd / Dahi", category: "Dairy", serving: "1 cup (150g)", calories: 100, protein: 5, carbs: 7, fat: 5, fiber: 0 },
+    { id: 62, name: "Chaas / Buttermilk", category: "Dairy", serving: "1 glass (200ml)", calories: 40, protein: 2, carbs: 5, fat: 1, fiber: 0 },
+    { id: 63, name: "Paneer (Raw)", category: "Dairy", serving: "50g", calories: 130, protein: 9, carbs: 2, fat: 10, fiber: 0 },
+    { id: 64, name: "Lassi (Sweet)", category: "Dairy", serving: "1 glass (200ml)", calories: 180, protein: 5, carbs: 28, fat: 5, fiber: 0 },
+    { id: 65, name: "Lassi (Salted)", category: "Dairy", serving: "1 glass (200ml)", calories: 80, protein: 4, carbs: 8, fat: 3, fiber: 0 },
+    { id: 66, name: "Raita (Boondi)", category: "Dairy", serving: "1 cup (150g)", calories: 120, protein: 4, carbs: 12, fat: 6, fiber: 0 },
+    { id: 67, name: "Raita (Cucumber)", category: "Dairy", serving: "1 cup (150g)", calories: 70, protein: 3, carbs: 6, fat: 4, fiber: 0.5 },
+    { id: 68, name: "Ghee", category: "Dairy", serving: "1 tsp (5g)", calories: 45, protein: 0, carbs: 0, fat: 5, fiber: 0 },
+
+    // === SNACKS & CHAAT ===
+    { id: 69, name: "Samosa", category: "Snacks & Chaat", serving: "1 medium (60g)", calories: 200, protein: 3, carbs: 24, fat: 10, fiber: 1 },
+    { id: 70, name: "Pakora / Bhajiya", category: "Snacks & Chaat", serving: "5 pieces (80g)", calories: 250, protein: 5, carbs: 22, fat: 16, fiber: 2 },
+    { id: 71, name: "Aloo Tikki", category: "Snacks & Chaat", serving: "2 pieces (100g)", calories: 220, protein: 4, carbs: 28, fat: 10, fiber: 2 },
+    { id: 72, name: "Pani Puri", category: "Snacks & Chaat", serving: "6 pieces", calories: 180, protein: 3, carbs: 30, fat: 5, fiber: 1 },
+    { id: 73, name: "Bhel Puri", category: "Snacks & Chaat", serving: "1 plate (100g)", calories: 200, protein: 4, carbs: 32, fat: 6, fiber: 2 },
+    { id: 74, name: "Sev Puri", category: "Snacks & Chaat", serving: "6 pieces", calories: 250, protein: 4, carbs: 30, fat: 12, fiber: 2 },
+    { id: 75, name: "Vada Pav", category: "Snacks & Chaat", serving: "1 piece", calories: 290, protein: 6, carbs: 38, fat: 13, fiber: 2 },
+    { id: 76, name: "Dhokla", category: "Snacks & Chaat", serving: "4 pieces (100g)", calories: 160, protein: 6, carbs: 24, fat: 4, fiber: 2 },
+    { id: 77, name: "Khandvi", category: "Snacks & Chaat", serving: "6 pieces (80g)", calories: 120, protein: 5, carbs: 14, fat: 5, fiber: 1 },
+    { id: 78, name: "Kachori", category: "Snacks & Chaat", serving: "1 medium (50g)", calories: 220, protein: 4, carbs: 24, fat: 12, fiber: 1.5 },
+    { id: 79, name: "Mathri", category: "Snacks & Chaat", serving: "4 pieces (40g)", calories: 180, protein: 3, carbs: 20, fat: 10, fiber: 1 },
+    { id: 80, name: "Murukku / Chakli", category: "Snacks & Chaat", serving: "4 pieces (40g)", calories: 190, protein: 3, carbs: 22, fat: 10, fiber: 1 },
+    { id: 81, name: "Namkeen Mix", category: "Snacks & Chaat", serving: "1/4 cup (30g)", calories: 150, protein: 4, carbs: 16, fat: 8, fiber: 1 },
+
+    // === SWEETS & DESSERTS ===
+    { id: 82, name: "Gulab Jamun", category: "Sweets", serving: "2 pieces (60g)", calories: 300, protein: 4, carbs: 42, fat: 12, fiber: 0 },
+    { id: 83, name: "Rasgulla", category: "Sweets", serving: "2 pieces (80g)", calories: 200, protein: 4, carbs: 38, fat: 4, fiber: 0 },
+    { id: 84, name: "Jalebi", category: "Sweets", serving: "2 pieces (50g)", calories: 250, protein: 2, carbs: 40, fat: 9, fiber: 0 },
+    { id: 85, name: "Kheer (Rice)", category: "Sweets", serving: "1 cup (150g)", calories: 220, protein: 5, carbs: 34, fat: 7, fiber: 0 },
+    { id: 86, name: "Gajar Halwa", category: "Sweets", serving: "1/2 cup (100g)", calories: 250, protein: 4, carbs: 32, fat: 12, fiber: 1 },
+    { id: 87, name: "Ladoo (Besan)", category: "Sweets", serving: "1 medium (40g)", calories: 180, protein: 3, carbs: 20, fat: 10, fiber: 1 },
+    { id: 88, name: "Barfi (Kaju)", category: "Sweets", serving: "1 piece (30g)", calories: 140, protein: 3, carbs: 18, fat: 6, fiber: 0 },
+    { id: 89, name: "Halwa (Sooji)", category: "Sweets", serving: "1/2 cup (80g)", calories: 220, protein: 3, carbs: 30, fat: 10, fiber: 0.5 },
+    { id: 90, name: "Sandesh", category: "Sweets", serving: "2 pieces (40g)", calories: 130, protein: 4, carbs: 18, fat: 5, fiber: 0 },
+    { id: 91, name: "Kulfi", category: "Sweets", serving: "1 stick (80g)", calories: 160, protein: 4, carbs: 20, fat: 7, fiber: 0 },
+
+    // === BEVERAGES ===
+    { id: 92, name: "Chai (with milk & sugar)", category: "Beverages", serving: "1 cup (150ml)", calories: 80, protein: 2, carbs: 12, fat: 2.5, fiber: 0 },
+    { id: 93, name: "Chai (without sugar)", category: "Beverages", serving: "1 cup (150ml)", calories: 40, protein: 2, carbs: 4, fat: 2, fiber: 0 },
+    { id: 94, name: "Coffee (with milk & sugar)", category: "Beverages", serving: "1 cup (150ml)", calories: 90, protein: 2, carbs: 14, fat: 2.5, fiber: 0 },
+    { id: 95, name: "Filter Coffee", category: "Beverages", serving: "1 cup (150ml)", calories: 100, protein: 3, carbs: 12, fat: 4, fiber: 0 },
+    { id: 96, name: "Nimbu Pani (Lemon Water)", category: "Beverages", serving: "1 glass (250ml)", calories: 45, protein: 0, carbs: 12, fat: 0, fiber: 0 },
+    { id: 97, name: "Mango Lassi", category: "Beverages", serving: "1 glass (250ml)", calories: 220, protein: 5, carbs: 38, fat: 5, fiber: 1 },
+    { id: 98, name: "Coconut Water", category: "Beverages", serving: "1 glass (200ml)", calories: 45, protein: 1, carbs: 9, fat: 0.5, fiber: 0 },
+    { id: 99, name: "Masala Chai", category: "Beverages", serving: "1 cup (150ml)", calories: 85, protein: 2, carbs: 12, fat: 3, fiber: 0 },
+    { id: 100, name: "Aam Panna", category: "Beverages", serving: "1 glass (200ml)", calories: 90, protein: 0.5, carbs: 22, fat: 0, fiber: 0.5 },
+
+    // === FRUITS ===
+    { id: 101, name: "Banana", category: "Fruits", serving: "1 medium (120g)", calories: 105, protein: 1, carbs: 27, fat: 0.5, fiber: 3 },
+    { id: 102, name: "Mango", category: "Fruits", serving: "1 cup chopped (165g)", calories: 100, protein: 1, carbs: 25, fat: 0.5, fiber: 3 },
+    { id: 103, name: "Apple", category: "Fruits", serving: "1 medium (150g)", calories: 80, protein: 0.5, carbs: 21, fat: 0, fiber: 4 },
+    { id: 104, name: "Papaya", category: "Fruits", serving: "1 cup chopped (140g)", calories: 60, protein: 1, carbs: 15, fat: 0, fiber: 2.5 },
+    { id: 105, name: "Guava", category: "Fruits", serving: "1 medium (100g)", calories: 68, protein: 2.5, carbs: 14, fat: 1, fiber: 5 },
+    { id: 106, name: "Pomegranate", category: "Fruits", serving: "1/2 cup seeds (90g)", calories: 72, protein: 1, carbs: 16, fat: 1, fiber: 3.5 },
+    { id: 107, name: "Chiku (Sapota)", category: "Fruits", serving: "1 medium (100g)", calories: 83, protein: 0.5, carbs: 20, fat: 1, fiber: 5 },
+    { id: 108, name: "Orange / Mosambi", category: "Fruits", serving: "1 medium (130g)", calories: 62, protein: 1, carbs: 15, fat: 0, fiber: 3 },
+
+    // === DRY FRUITS & NUTS ===
+    { id: 109, name: "Almonds", category: "Dry Fruits", serving: "10 pieces (15g)", calories: 85, protein: 3, carbs: 3, fat: 7, fiber: 2 },
+    { id: 110, name: "Cashews", category: "Dry Fruits", serving: "10 pieces (15g)", calories: 80, protein: 2.5, carbs: 5, fat: 6, fiber: 0.5 },
+    { id: 111, name: "Walnuts", category: "Dry Fruits", serving: "4 halves (15g)", calories: 95, protein: 2, carbs: 2, fat: 9, fiber: 1 },
+    { id: 112, name: "Dates (Khajoor)", category: "Dry Fruits", serving: "2 pieces (20g)", calories: 55, protein: 0.5, carbs: 14, fat: 0, fiber: 1.5 },
+    { id: 113, name: "Raisins (Kishmish)", category: "Dry Fruits", serving: "1 tbsp (15g)", calories: 45, protein: 0.5, carbs: 12, fat: 0, fiber: 0.5 },
+    { id: 114, name: "Peanuts (Roasted)", category: "Dry Fruits", serving: "1/4 cup (30g)", calories: 170, protein: 7, carbs: 6, fat: 14, fiber: 2 },
+    { id: 115, name: "Makhana (Fox Nuts)", category: "Dry Fruits", serving: "1 cup roasted (20g)", calories: 75, protein: 2, carbs: 13, fat: 1, fiber: 1 },
+
+    // === CONDIMENTS & EXTRAS ===
+    { id: 116, name: "Pickle (Mixed)", category: "Extras", serving: "1 tbsp (15g)", calories: 30, protein: 0.5, carbs: 2, fat: 2, fiber: 0.5 },
+    { id: 117, name: "Papad (Roasted)", category: "Extras", serving: "1 piece (15g)", calories: 45, protein: 2.5, carbs: 7, fat: 0.5, fiber: 1 },
+    { id: 118, name: "Papad (Fried)", category: "Extras", serving: "1 piece (15g)", calories: 75, protein: 2.5, carbs: 7, fat: 4, fiber: 1 },
+    { id: 119, name: "Coconut Chutney", category: "Extras", serving: "2 tbsp (30g)", calories: 50, protein: 1, carbs: 3, fat: 4, fiber: 1 },
+    { id: 120, name: "Green Chutney (Mint)", category: "Extras", serving: "2 tbsp (30g)", calories: 15, protein: 0.5, carbs: 2, fat: 0.5, fiber: 0.5 },
+    { id: 121, name: "Tamarind Chutney", category: "Extras", serving: "2 tbsp (30g)", calories: 45, protein: 0, carbs: 11, fat: 0, fiber: 0.5 },
+    { id: 122, name: "Salad (Green)", category: "Extras", serving: "1 cup (100g)", calories: 25, protein: 1, carbs: 5, fat: 0, fiber: 2 },
+    { id: 123, name: "Sugar", category: "Extras", serving: "1 tsp (5g)", calories: 20, protein: 0, carbs: 5, fat: 0, fiber: 0 },
+    { id: 124, name: "Butter", category: "Extras", serving: "1 tsp (5g)", calories: 35, protein: 0, carbs: 0, fat: 4, fiber: 0 },
+    { id: 125, name: "Cooking Oil", category: "Extras", serving: "1 tsp (5ml)", calories: 45, protein: 0, carbs: 0, fat: 5, fiber: 0 },
+];
+
+// Get all unique categories
+const FOOD_CATEGORIES = [...new Set(FOOD_DATABASE.map(f => f.category))];

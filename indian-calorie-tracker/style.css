@@ -1,0 +1,499 @@
+/* NutriDidi - Indian Calorie Tracker Styles */
+
+:root {
+    --primary: #e85d75;
+    --primary-dark: #c94a60;
+    --primary-light: #fce4ec;
+    --accent: #ff9800;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --bg: #faf5f0;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #e8e0d8;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    text-align: center;
+    padding: 1.5rem 1rem;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+header .tagline {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+}
+
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+}
+
+.card h2 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 0.5rem;
+}
+
+/* Forms */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.form-group {
+    margin-bottom: 0.75rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    background: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: #ecf0f1;
+    color: var(--text);
+    width: 100%;
+    margin-top: 0.75rem;
+}
+
+.btn-secondary:hover {
+    background: #dfe6e9;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#calorie-goal-display {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: var(--primary-light);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#calorie-goal-display strong {
+    font-size: 1.3rem;
+    color: var(--primary-dark);
+}
+
+/* Progress Ring */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progress-ring-wrapper {
+    position: relative;
+    width: 180px;
+    height: 180px;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: #f0e8e0;
+    stroke-width: 12;
+}
+
+.progress-ring-fill {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 490;
+    stroke-dashoffset: 490;
+    transition: stroke-dashoffset 0.6s ease, stroke 0.3s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.progress-text span:first-child {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.progress-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+/* Macro Summary */
+.macro-summary {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.macro-item {
+    text-align: center;
+}
+
+.macro-value {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.macro-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Meal Breakdown */
+.meal-breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.meal-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--primary-light);
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
+.meal-icon {
+    font-size: 1.1rem;
+}
+
+.meal-name {
+    font-weight: 600;
+    flex: 1;
+}
+
+.meal-cals {
+    font-weight: 500;
+    color: var(--primary-dark);
+}
+
+/* Search Results */
+.search-results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-group:has(#food-search) {
+    position: relative;
+}
+
+.search-item {
+    padding: 0.6rem 0.75rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f0eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-item:hover {
+    background: var(--primary-light);
+}
+
+.search-item.no-result {
+    color: var(--text-light);
+    cursor: default;
+    justify-content: center;
+}
+
+.search-food-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.search-food-info {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.serving-unit-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+}
+
+/* Logged Meals */
+.meal-group h3 {
+    font-size: 0.95rem;
+    color: var(--primary);
+    margin: 0.75rem 0 0.4rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--primary-light);
+}
+
+.meal-group:first-child h3 {
+    margin-top: 0;
+}
+
+.logged-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f5f0eb;
+}
+
+.logged-item:last-child {
+    border-bottom: none;
+}
+
+.logged-item-info {
+    flex: 1;
+}
+
+.logged-item-name {
+    display: block;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.logged-item-detail {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.logged-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logged-item-cals {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--primary-dark);
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: var(--red);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0 0.25rem;
+    line-height: 1;
+}
+
+.btn-remove:hover {
+    color: #c0392b;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-light);
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Category Tabs */
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.cat-tab {
+    padding: 0.35rem 0.7rem;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    background: white;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.cat-tab:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.cat-tab.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Food Table */
+#food-table-container {
+    overflow-x: auto;
+}
+
+.food-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.food-table th {
+    text-align: left;
+    padding: 0.5rem 0.4rem;
+    border-bottom: 2px solid var(--primary-light);
+    color: var(--text-light);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.food-table td {
+    padding: 0.5rem 0.4rem;
+    border-bottom: 1px solid #f5f0eb;
+}
+
+.food-table tr:hover {
+    background: var(--primary-light);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .meal-breakdown {
+        grid-template-columns: 1fr;
+    }
+
+    .macro-summary {
+        gap: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .food-table {
+        font-size: 0.8rem;
+    }
+}
