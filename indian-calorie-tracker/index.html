@@ -103,9 +103,73 @@
             </div>
         </section>
 
+        <!-- Photo Scan Section -->
+        <section id="photo-section" class="card">
+            <h2>Scan Your Food</h2>
+            <p class="section-desc">Take a photo or upload an image of your meal to auto-detect calories</p>
+
+            <!-- API Key Setup -->
+            <div id="api-key-setup">
+                <div class="form-group">
+                    <label for="api-key">Anthropic API Key</label>
+                    <div class="api-key-row">
+                        <input type="password" id="api-key" placeholder="sk-ant-...">
+                        <button id="save-api-key-btn" class="btn btn-small">Save</button>
+                    </div>
+                    <span class="helper-text">Needed for AI food recognition. Stored locally in your browser only.</span>
+                </div>
+            </div>
+            <div id="api-key-saved" class="hidden">
+                <span class="api-key-status">API key saved</span>
+                <button id="change-api-key-btn" class="btn-link">Change</button>
+            </div>
+
+            <!-- Photo Upload Area -->
+            <div id="photo-upload-area" class="photo-upload-area">
+                <input type="file" id="photo-input" accept="image/*" capture="environment" hidden>
+                <div id="photo-placeholder" class="photo-placeholder">
+                    <span class="camera-icon">&#128247;</span>
+                    <span>Tap to take photo or upload image</span>
+                </div>
+                <img id="photo-preview" class="photo-preview hidden" alt="Food photo">
+            </div>
+
+            <div class="form-group">
+                <label for="photo-meal-type">Meal</label>
+                <select id="photo-meal-type">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snacks">Snacks</option>
+                </select>
+            </div>
+
+            <button id="analyze-btn" class="btn btn-primary" disabled>Analyze Food Photo</button>
+
+            <!-- Analysis Results -->
+            <div id="analysis-results" class="hidden">
+                <h3>Detected Foods</h3>
+                <div id="detected-foods-list"></div>
+                <div class="analysis-total">
+                    <span>Estimated Total:</span>
+                    <strong id="analysis-total-cals">0 kcal</strong>
+                </div>
+                <div class="analysis-actions">
+                    <button id="add-all-detected-btn" class="btn btn-primary">Add All to Meal</button>
+                    <button id="clear-analysis-btn" class="btn btn-secondary">Clear</button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="analysis-loading" class="hidden">
+                <div class="loading-spinner"></div>
+                <p>Analyzing your food photo...</p>
+            </div>
+        </section>
+
         <!-- Meal Logging Section -->
         <section id="log-section" class="card">
-            <h2>Log a Meal</h2>
+            <h2>Log a Meal (Manual)</h2>
             <div class="form-group">
                 <label for="meal-type">Meal</label>
                 <select id="meal-type">

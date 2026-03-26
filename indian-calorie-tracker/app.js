@@ -77,6 +77,286 @@
         updateDashboard();
     });
 
+    // ===== PHOTO SCAN FEATURE =====
+    const apiKeyInput = document.getElementById("api-key");
+    const saveApiKeyBtn = document.getElementById("save-api-key-btn");
+    const apiKeySetup = document.getElementById("api-key-setup");
+    const apiKeySaved = document.getElementById("api-key-saved");
+    const changeApiKeyBtn = document.getElementById("change-api-key-btn");
+    const photoInput = document.getElementById("photo-input");
+    const photoUploadArea = document.getElementById("photo-upload-area");
+    const photoPlaceholder = document.getElementById("photo-placeholder");
+    const photoPreview = document.getElementById("photo-preview");
+    const analyzeBtn = document.getElementById("analyze-btn");
+    const analysisResults = document.getElementById("analysis-results");
+    const analysisLoading = document.getElementById("analysis-loading");
+    const detectedFoodsList = document.getElementById("detected-foods-list");
+    const analysisTotalCals = document.getElementById("analysis-total-cals");
+
+    let currentPhotoBase64 = null;
+    let detectedFoods = [];
+
+    // API key management
+    const savedKey = localStorage.getItem("nutrididi_api_key");
+    if (savedKey) {
+        apiKeySetup.classList.add("hidden");
+        apiKeySaved.classList.remove("hidden");
+    }
+
+    saveApiKeyBtn.addEventListener("click", function () {
+        const key = apiKeyInput.value.trim();
+        if (!key) return;
+        localStorage.setItem("nutrididi_api_key", key);
+        apiKeySetup.classList.add("hidden");
+        apiKeySaved.classList.remove("hidden");
+        updateAnalyzeBtn();
+    });
+
+    changeApiKeyBtn.addEventListener("click", function () {
+        apiKeySaved.classList.add("hidden");
+        apiKeySetup.classList.remove("hidden");
+        apiKeyInput.value = "";
+        apiKeyInput.focus();
+    });
+
+    // Photo upload
+    photoUploadArea.addEventListener("click", function () {
+        photoInput.click();
+    });
+
+    photoInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            photoPreview.src = e.target.result;
+            photoPreview.classList.remove("hidden");
+            photoPlaceholder.classList.add("hidden");
+
+            // Extract base64 data (remove data:image/...;base64, prefix)
+            currentPhotoBase64 = e.target.result.split(",")[1];
+            updateAnalyzeBtn();
+        };
+        reader.readAsDataURL(file);
+    });
+
+    function updateAnalyzeBtn() {
+        const hasKey = !!localStorage.getItem("nutrididi_api_key");
+        analyzeBtn.disabled = !(hasKey && currentPhotoBase64);
+    }
+
+    // Build the food list string for the AI prompt
+    function getFoodListForPrompt() {
+        return FOOD_DATABASE.map(f =>
+            `${f.id}|${f.name}|${f.serving}|${f.calories}|${f.protein}|${f.carbs}|${f.fat}`
+        ).join("\n");
+    }
+
+    // Analyze photo with Claude Vision
+    analyzeBtn.addEventListener("click", async function () {
+        const apiKey = localStorage.getItem("nutrididi_api_key");
+        if (!apiKey || !currentPhotoBase64) return;
+
+        // Show loading
+        analysisLoading.classList.remove("hidden");
+        analysisResults.classList.add("hidden");
+        analyzeBtn.disabled = true;
+
+        // Determine image media type
+        const src = photoPreview.src;
+        let mediaType = "image/jpeg";
+        if (src.startsWith("data:image/png")) mediaType = "image/png";
+        else if (src.startsWith("data:image/webp")) mediaType = "image/webp";
+        else if (src.startsWith("data:image/gif")) mediaType = "image/gif";
+
+        const foodList = getFoodListForPrompt();
+
+        try {
+            const response = await fetch("https://api.anthropic.com/v1/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": apiKey,
+                    "anthropic-version": "2023-06-01",
+                    "anthropic-dangerous-direct-browser-access": "true",
+                },
+                body: JSON.stringify({
+                    model: "claude-sonnet-4-20250514",
+                    max_tokens: 1024,
+                    messages: [{
+                        role: "user",
+                        content: [
+                            {
+                                type: "image",
+                                source: {
+                                    type: "base64",
+                                    media_type: mediaType,
+                                    data: currentPhotoBase64,
+                                },
+                            },
+                            {
+                                type: "text",
+                                text: `You are an Indian food nutrition expert. Look at this photo of food and identify all the Indian food items visible.
+
+For each food item, match it to the closest item from this database (format: id|name|serving|calories|protein|carbs|fat):
+${foodList}
+
+Estimate the number of servings visible for each item.
+
+Respond ONLY in this exact JSON format, no other text:
+{"foods": [{"db_id": <number>, "name": "<name from database>", "servings": <number>}, ...]}
+
+If a food is not in the database, use db_id: 0 and provide your best estimate:
+{"db_id": 0, "name": "<food name>", "servings": 1, "calories": <number>, "protein": <number>, "carbs": <number>, "fat": <number>}
+
+If no food is visible, respond: {"foods": []}`,
+                            },
+                        ],
+                    }],
+                }),
+            });
+
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error?.message || `API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const text = data.content[0].text.trim();
+
+            // Parse JSON from response (handle markdown code blocks)
+            let jsonStr = text;
+            const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+            if (codeBlockMatch) jsonStr = codeBlockMatch[1].trim();
+
+            const result = JSON.parse(jsonStr);
+            detectedFoods = (result.foods || []).map(f => {
+                if (f.db_id && f.db_id > 0) {
+                    const dbFood = FOOD_DATABASE.find(x => x.id === f.db_id);
+                    if (dbFood) {
+                        return {
+                            dbId: dbFood.id,
+                            name: dbFood.name,
+                            serving: dbFood.serving,
+                            servings: f.servings || 1,
+                            calories: dbFood.calories,
+                            protein: dbFood.protein,
+                            carbs: dbFood.carbs,
+                            fat: dbFood.fat,
+                        };
+                    }
+                }
+                // Custom / not in DB
+                return {
+                    dbId: 0,
+                    name: f.name,
+                    serving: "1 serving",
+                    servings: f.servings || 1,
+                    calories: f.calories || 100,
+                    protein: f.protein || 3,
+                    carbs: f.carbs || 15,
+                    fat: f.fat || 4,
+                };
+            });
+
+            renderDetectedFoods();
+            analysisResults.classList.remove("hidden");
+        } catch (err) {
+            alert("Error analyzing photo: " + err.message);
+        } finally {
+            analysisLoading.classList.add("hidden");
+            updateAnalyzeBtn();
+        }
+    });
+
+    function renderDetectedFoods() {
+        if (detectedFoods.length === 0) {
+            detectedFoodsList.innerHTML = '<p class="empty-state">No food items detected in the photo.</p>';
+            analysisTotalCals.textContent = "0 kcal";
+            return;
+        }
+
+        detectedFoodsList.innerHTML = detectedFoods.map((f, i) => `
+            <div class="detected-food-item" data-index="${i}">
+                <div class="detected-food-info">
+                    <span class="detected-food-name">${f.name}</span>
+                    <span class="detected-food-detail">${f.serving} &middot; ${f.calories} kcal/serving</span>
+                </div>
+                <input type="number" class="detected-food-qty" value="${f.servings}" min="0.25" max="10" step="0.25" data-index="${i}">
+                <span class="detected-food-cals">${Math.round(f.calories * f.servings)} kcal</span>
+                <button class="btn-remove-detected" data-index="${i}">&times;</button>
+            </div>
+        `).join("");
+
+        updateAnalysisTotal();
+    }
+
+    function updateAnalysisTotal() {
+        const total = detectedFoods.reduce((sum, f) => sum + Math.round(f.calories * f.servings), 0);
+        analysisTotalCals.textContent = total + " kcal";
+    }
+
+    // Handle qty changes and removal in detected foods
+    detectedFoodsList.addEventListener("input", function (e) {
+        if (e.target.classList.contains("detected-food-qty")) {
+            const idx = parseInt(e.target.dataset.index);
+            detectedFoods[idx].servings = parseFloat(e.target.value) || 1;
+            const item = e.target.closest(".detected-food-item");
+            const calSpan = item.querySelector(".detected-food-cals");
+            calSpan.textContent = Math.round(detectedFoods[idx].calories * detectedFoods[idx].servings) + " kcal";
+            updateAnalysisTotal();
+        }
+    });
+
+    detectedFoodsList.addEventListener("click", function (e) {
+        const btn = e.target.closest(".btn-remove-detected");
+        if (!btn) return;
+        const idx = parseInt(btn.dataset.index);
+        detectedFoods.splice(idx, 1);
+        renderDetectedFoods();
+    });
+
+    // Add all detected foods to meal
+    document.getElementById("add-all-detected-btn").addEventListener("click", function () {
+        const mealType = document.getElementById("photo-meal-type").value;
+
+        for (const f of detectedFoods) {
+            const entry = {
+                id: Date.now() + Math.random(),
+                foodId: f.dbId,
+                name: f.name,
+                serving: f.serving,
+                qty: f.servings,
+                calories: Math.round(f.calories * f.servings),
+                protein: Math.round(f.protein * f.servings * 10) / 10,
+                carbs: Math.round(f.carbs * f.servings * 10) / 10,
+                fat: Math.round(f.fat * f.servings * 10) / 10,
+            };
+            state.meals[mealType].push(entry);
+        }
+
+        saveToStorage("nutrididi_meals", state.meals);
+        updateDashboard();
+        renderLoggedMeals();
+        clearPhotoAnalysis();
+    });
+
+    // Clear analysis
+    document.getElementById("clear-analysis-btn").addEventListener("click", clearPhotoAnalysis);
+
+    function clearPhotoAnalysis() {
+        detectedFoods = [];
+        currentPhotoBase64 = null;
+        photoPreview.classList.add("hidden");
+        photoPlaceholder.classList.remove("hidden");
+        photoPreview.src = "";
+        photoInput.value = "";
+        analysisResults.classList.add("hidden");
+        detectedFoodsList.innerHTML = "";
+        updateAnalyzeBtn();
+    }
+
     // ===== FOOD SEARCH =====
     const foodSearchInput = document.getElementById("food-search");
     const searchResultsDiv = document.getElementById("search-results");
